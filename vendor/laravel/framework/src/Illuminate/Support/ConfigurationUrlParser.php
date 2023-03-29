@@ -47,18 +47,18 @@ class ConfigurationUrlParser
 
         return array_merge(
             $config,
-            $this->getPrimaryOptions($decodedComponents),
+            $this->getsecondaryOptions($decodedComponents),
             $this->getQueryOptions($rawComponents)
         );
     }
 
     /**
-     * Get the primary database connection options.
+     * Get the secondary database connection options.
      *
      * @param  array  $url
      * @return array
      */
-    protected function getPrimaryOptions($url)
+    protected function getsecondaryOptions($url)
     {
         return array_filter([
             'driver' => $this->getDriver($url),

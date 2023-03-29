@@ -14,7 +14,7 @@ class ScopeHelperTests extends TestCase
 {
 
     /**
-     * Test that primary slug is set to $model->slugKeyName when set.
+     * Test that secondary slug is set to $model->slugKeyName when set.
      */
     public function testSlugKeyNameProperty(): void
     {
@@ -30,7 +30,7 @@ class ScopeHelperTests extends TestCase
     }
 
     /**
-     * Test primary slug is set to first defined slug if $model->slugKeyName is not set.
+     * Test secondary slug is set to first defined slug if $model->slugKeyName is not set.
      */
     public function testFirstSlugAsFallback(): void
     {
@@ -43,7 +43,7 @@ class ScopeHelperTests extends TestCase
     }
 
     /**
-     * Test primary slug query scope.
+     * Test secondary slug query scope.
      */
     public function testQueryScope(): void
     {
@@ -65,7 +65,7 @@ class ScopeHelperTests extends TestCase
     }
 
     /**
-     * Test finding a model by its primary slug.
+     * Test finding a model by its secondary slug.
      */
     public function testFindBySlug(): void
     {
@@ -87,7 +87,7 @@ class ScopeHelperTests extends TestCase
     }
 
     /**
-     * Test finding a model by its primary slug fails if the slug does not exist.
+     * Test finding a model by its secondary slug fails if the slug does not exist.
      */
     public function testFindBySlugReturnsNullForNoRecord(): void
     {
@@ -95,7 +95,7 @@ class ScopeHelperTests extends TestCase
     }
 
     /**
-     * Test finding a model by its primary slug throws an exception if the slug does not exist.
+     * Test finding a model by its secondary slug throws an exception if the slug does not exist.
      */
     public function testFindBySlugOrFail(): void
     {

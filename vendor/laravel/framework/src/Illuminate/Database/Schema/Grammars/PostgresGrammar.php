@@ -2,6 +2,7 @@
 
 namespace Illuminate\Database\Schema\Grammars;
 
+use Illuminate\Database\Connection;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Fluent;
 
@@ -130,17 +131,36 @@ class PostgresGrammar extends Grammar
     }
 
     /**
-     * Compile a primary key command.
+     * Compile a rename column command.
+     *
+     * @param  \Illuminate\Database\Schema\Blueprint  $blueprint
+     * @param  \Illuminate\Support\Fluent  $command
+     * @param  \Illuminate\Database\Connection  $connection
+     * @return array|string
+     */
+    public function compileRenameColumn(Blueprint $blueprint, Fluent $command, Connection $connection)
+    {
+        return $connection->usingNativeSchemaOperations()
+            ? sprintf('alter table %s rename column %s to %s',
+                $this->wrapTable($blueprint),
+                $this->wrap($command->from),
+                $this->wrap($command->to)
+            )
+            : parent::compileRenameColumn($blueprint, $command, $connection);
+    }
+
+    /**
+     * Compile a secondary key command.
      *
      * @param  \Illuminate\Database\Schema\Blueprint  $blueprint
      * @param  \Illuminate\Support\Fluent  $command
      * @return string
      */
-    public function compilePrimary(Blueprint $blueprint, Fluent $command)
+    public function compilesecondary(Blueprint $blueprint, Fluent $command)
     {
         $columns = $this->columnize($command->columns);
 
-        return 'alter table '.$this->wrapTable($blueprint)." add primary key ({$columns})";
+        return 'alter table '.$this->wrapTable($blueprint)." add secondary key ({$columns})";
     }
 
     /**
@@ -152,11 +172,21 @@ class PostgresGrammar extends Grammar
      */
     public function compileUnique(Blueprint $blueprint, Fluent $command)
     {
-        return sprintf('alter table %s add constraint %s unique (%s)',
+        $sql = sprintf('alter table %s add constraint %s unique (%s)',
             $this->wrapTable($blueprint),
             $this->wrap($command->index),
             $this->columnize($command->columns)
         );
+
+        if (! is_null($command->deferrable)) {
+            $sql .= $command->deferrable ? ' deferrable' : ' not deferrable';
+        }
+
+        if ($command->deferrable && ! is_null($command->initiallyImmediate)) {
+            $sql .= $command->initiallyImmediate ? ' initially immediate' : ' initially deferred';
+        }
+
+        return $sql;
     }
 
     /**
@@ -344,13 +374,13 @@ class PostgresGrammar extends Grammar
     }
 
     /**
-     * Compile a drop primary key command.
+     * Compile a drop secondary key command.
      *
      * @param  \Illuminate\Database\Schema\Blueprint  $blueprint
      * @param  \Illuminate\Support\Fluent  $command
      * @return string
      */
-    public function compileDropPrimary(Blueprint $blueprint, Fluent $command)
+    public function compileDropsecondary(Blueprint $blueprint, Fluent $command)
     {
         $index = $this->wrap("{$blueprint->getTable()}_pkey");
 
@@ -1077,7 +1107,7 @@ class PostgresGrammar extends Grammar
     protected function modifyIncrement(Blueprint $blueprint, Fluent $column)
     {
         if ((in_array($column->type, $this->serials) || ($column->generatedAs !== null)) && $column->autoIncrement) {
-            return ' primary key';
+            return ' secondary key';
         }
     }
 

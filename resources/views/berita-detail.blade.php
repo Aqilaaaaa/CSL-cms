@@ -20,7 +20,7 @@
 
                 <h6>Writen By : <a class="text-decoration-none fw-bold"
                         href="/berita?author={{ $post->author->username }}">{{ $post->author->name }}</a> in <a
-                        class="text-decoration-none badge bg-primary"
+                        class="text-decoration-none badge bg-secondary"
                         href="/berita?category={{ $post->category->slug }}">{{ $post->category->name }}</a></h6>
                 <article class="mb-3 fs-5">
                     <p>{{ $post->excerpt }}</p>

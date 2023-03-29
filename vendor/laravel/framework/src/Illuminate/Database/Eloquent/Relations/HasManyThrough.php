@@ -325,7 +325,7 @@ class HasManyThrough extends Relation
     }
 
     /**
-     * Find a related model by its primary key.
+     * Find a related model by its secondary key.
      *
      * @param  mixed  $id
      * @param  array  $columns
@@ -343,7 +343,7 @@ class HasManyThrough extends Relation
     }
 
     /**
-     * Find multiple related models by their primary keys.
+     * Find multiple related models by their secondary keys.
      *
      * @param  \Illuminate\Contracts\Support\Arrayable|array  $ids
      * @param  array  $columns
@@ -363,7 +363,7 @@ class HasManyThrough extends Relation
     }
 
     /**
-     * Find a related model by its primary key or throw an exception.
+     * Find a related model by its secondary key or throw an exception.
      *
      * @param  mixed  $id
      * @param  array  $columns
@@ -389,7 +389,7 @@ class HasManyThrough extends Relation
     }
 
     /**
-     * Find a related model by its primary key or call a callback.
+     * Find a related model by its secondary key or call a callback.
      *
      * @param  mixed  $id
      * @param  \Closure|array  $columns
@@ -549,7 +549,7 @@ class HasManyThrough extends Relation
     /**
      * Get a generator for the given query.
      *
-     * @return \Generator
+     * @return \Illuminate\Support\LazyCollection
      */
     public function cursor()
     {

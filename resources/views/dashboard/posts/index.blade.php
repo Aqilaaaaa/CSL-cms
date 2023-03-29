@@ -5,8 +5,8 @@
         <h2>{{ $title }}</h2>
     </div>
     <div class="table-responsive col-lg-8">
-        <a href="/dashboard/beritas/create" class="btn btn-primary mb-3"><span class="me-1" data-feather="file-plus"></span>
-            Upload artikel</a>
+        <a href="/dashboard/beritas/create" class="btn btn-secondary mb-3"><span class="me-1" data-feather="file-plus"></span>
+            Buat Artikel</a>
         @if (session()->has('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 <strong>Success</strong> {{ session('success') }} ✅
@@ -19,6 +19,7 @@
                     <th scope="col">No</th>
                     <th scope="col">Judul</th>
                     <th scope="col">Kategori</th>
+                    <th scope="col">Status</th>
                     <th scope="col">Action</th>
                 </tr>
             </thead>
@@ -33,6 +34,9 @@
                             <h6>{{ $post->category->name }}</h6>
                         </td>
                         <td>
+                            <h6>{{ $post->status }}</h6>
+                        </td>
+                        <td>
                             <a href="/dashboard/beritas/{{ $post->slug }}" class="badge bg-info mb-1"><span
                                     data-feather="eye"></span></a>
                             <a href="/dashboard/beritas/{{ $post->slug }}/edit" class="badge bg-warning mb-1"><span data-feather="edit"></span></a>
@@ -41,7 +45,7 @@
                                 
                                 @method('delete')
                                 @csrf
-                                <button class="badge bg-danger border-0" id="btn-submit" onclick="return confirm('Yalin Ingin Menghapus?')" type="submit"><span
+                                <button class="badge bg-danger border-0" id="btn-submit" onclick="return confirm('Yakin Ingin Menghapus?')" type="submit"><span
                                         data-feather="x-circle"></span></button>
                             </form>
 

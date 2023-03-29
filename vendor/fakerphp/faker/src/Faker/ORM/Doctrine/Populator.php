@@ -86,7 +86,7 @@ class Populator
      * Populate the database using all the Entity classes previously added.
      *
      * Please note that large amounts of data will result in more memory usage since the the Populator will return
-     * all newly created primary keys after executing.
+     * all newly created secondary keys after executing.
      *
      * @param ObjectManager|null $entityManager A Doctrine connection object
      *
@@ -111,7 +111,7 @@ class Populator
                 $insertedEntities[$class][] = $this->entities[$class]->execute(
                     $entityManager,
                     $insertedEntities,
-                    $generateId
+                    $generateId,
                 );
 
                 if (count($insertedEntities) % $this->batchSize === 0) {

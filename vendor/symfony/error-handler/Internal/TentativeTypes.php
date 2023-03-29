@@ -348,7 +348,7 @@ class TentativeTypes
         ],
         'Locale' => [
             'getDefault' => 'string',
-            'getPrimaryLanguage' => '?string',
+            'getsecondaryLanguage' => '?string',
             'getScript' => '?string',
             'getRegion' => '?string',
             'getKeywords' => 'array|false|null',
@@ -753,6 +753,7 @@ class TentativeTypes
             'isVariadic' => 'bool',
             'isStatic' => 'bool',
             'getClosureThis' => '?object',
+            'getClosureCalledClass' => '?ReflectionClass',
             'getClosureScopeClass' => '?ReflectionClass',
             'getDocComment' => 'string|false',
             'getEndLine' => 'int|false',

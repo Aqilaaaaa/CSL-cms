@@ -2,11 +2,41 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.11.0](https://github.com/brick/math/releases/tag/0.11.0) - 2023-01-16
+
+💥 **Breaking changes**
+
+- Minimum PHP version is now 8.0
+- Methods accepting a union of types are now strongly typed<sup>*</sup>
+- `MathException` now extends `Exception` instead of `RuntimeException`
+
+<sup>* You may now run into type errors if you were passing `Stringable` objects to `of()` or any of the methods
+internally calling `of()`, with `strict_types` enabled. You can fix this by casting `Stringable` objects to `string`
+first.</sup>
+
+## [0.10.2](https://github.com/brick/math/releases/tag/0.10.2) - 2022-08-11
+
+👌 **Improvements**
+
+- `BigRational::toFloat()` now simplifies the fraction before performing division (#73) thanks to @olsavmic
+
+## [0.10.1](https://github.com/brick/math/releases/tag/0.10.1) - 2022-08-02
+
+ **New features**
+
+- `BigInteger::gcdMultiple()` returns the GCD of multiple `BigInteger` numbers
+
+## [0.10.0](https://github.com/brick/math/releases/tag/0.10.0) - 2022-06-18
+
+💥 **Breaking changes**
+
+- Minimum PHP version is now 7.4
+
 ## [0.9.3](https://github.com/brick/math/releases/tag/0.9.3) - 2021-08-15
 
 🚀 **Compatibility with PHP 8.1**
 
-- Support for custom object serialization; this removes a warning on PHP 8.1 due to the `Serializable` interface being deprecated (thanks @TRowbotham)
+- Support for custom object serialization; this removes a warning on PHP 8.1 due to the `Serializable` interface being deprecated (#60) thanks @TRowbotham
 
 ## [0.9.2](https://github.com/brick/math/releases/tag/0.9.2) - 2021-01-20
 
@@ -16,7 +46,7 @@ All notable changes to this project will be documented in this file.
 
 ## [0.9.1](https://github.com/brick/math/releases/tag/0.9.1) - 2020-08-19
 
-✨ New features
+ **New features**
 
 - `BigInteger::not()` returns the bitwise `NOT` value
 
@@ -49,7 +79,7 @@ All notable changes to this project will be documented in this file.
 
 - This version reintroduces the deprecated `BigInteger::parse()` method, that has been removed by mistake in version `0.8.9` and should have lasted for the whole `0.8` release cycle.
 
-✨ **New features**
+ **New features**
 
 - `BigInteger::modInverse()` calculates a modular multiplicative inverse
 - `BigInteger::fromBytes()` creates a `BigInteger` from a byte string
@@ -73,13 +103,13 @@ All notable changes to this project will be documented in this file.
 
 ## [0.8.14](https://github.com/brick/math/releases/tag/0.8.14) - 2020-02-18
 
-✨ **New features**
+ **New features**
 
 - `BigInteger::getLowestSetBit()` returns the index of the rightmost one bit
 
 ## [0.8.13](https://github.com/brick/math/releases/tag/0.8.13) - 2020-02-16
 
-✨ **New features**
+ **New features**
 
 - `BigInteger::isEven()` tests whether the number is even
 - `BigInteger::isOdd()` tests whether the number is odd
@@ -96,36 +126,36 @@ This is a maintenance release: no bug fixes, no new features, no breaking change
 
 ## [0.8.11](https://github.com/brick/math/releases/tag/0.8.11) - 2020-01-23
 
-✨ **New feature**
+ **New feature**
 
 `BigInteger::powerMod()` performs a power-with-modulo operation. Useful for crypto.
 
 ## [0.8.10](https://github.com/brick/math/releases/tag/0.8.10) - 2020-01-21
 
-✨ **New feature**
+ **New feature**
 
 `BigInteger::mod()` returns the **modulo** of two numbers. The *modulo* differs from the *remainder* when the signs of the operands are different.
 
 ## [0.8.9](https://github.com/brick/math/releases/tag/0.8.9) - 2020-01-08
 
-⚡️ **Performance improvements**
+ **Performance improvements**
 
 A few additional optimizations in `BigInteger` and `BigDecimal` when one of the operands can be returned as is. Thanks to @tomtomsen in #24.
 
 ## [0.8.8](https://github.com/brick/math/releases/tag/0.8.8) - 2019-04-25
 
-🐛 **Bug fixes**
+ **Bug fixes**
 
 - `BigInteger::toBase()` could return an empty string for zero values (BCMath & Native calculators only, GMP calculator unaffected)
 
-✨ **New features**
+ **New features**
 
 - `BigInteger::toArbitraryBase()` converts a number to an arbitrary base, using a custom alphabet
 - `BigInteger::fromArbitraryBase()` converts a string in an arbitrary base, using a custom alphabet, back to a number
 
 These methods can be used as the foundation to convert strings between different bases/alphabets, using BigInteger as an intermediate representation.
 
-💩 **Deprecations**
+ **Deprecations**
 
 - `BigInteger::parse()` is now deprecated in favour of `fromBase()`
 
@@ -153,7 +183,7 @@ You can expect **at least a 3x performance improvement** for common arithmetic o
 
 **Bug fix**: `of()` factory methods could fail when passing a `float` in environments using a `LC_NUMERIC` locale with a decimal separator other than `'.'` (#20).
 
-Thanks @manowark 👍
+Thanks @manowark 
 
 ## [0.8.4](https://github.com/brick/math/releases/tag/0.8.4) - 2018-12-07
 
@@ -207,7 +237,7 @@ The following deprecated methods have been removed. Use the new method name inst
 | `shiftedLeft()` | returns the number shifted left by a number of bits |
 | `shiftedRight()` | returns the number shifted right by a number of bits |
 
-Thanks to @DASPRiD 👍
+Thanks to @DASPRiD 
 
 ## [0.7.3](https://github.com/brick/math/releases/tag/0.7.3) - 2018-08-20
 
@@ -325,8 +355,8 @@ This release also comes with many performance improvements.
   - `getFraction()` is renamed to `fraction()`
   - `divideAndRemainder()` is renamed to `quotientAndRemainder()`
   - `dividedBy()` now takes a **mandatory** `$scale` parameter **before** the rounding mode
-  - `toBigInteger()` does not accept a `$roundingMode` parameter any more
-  - `toBigRational()` does not simplify the fraction any more; explicitly add `->simplified()` to get the previous behaviour
+  - `toBigInteger()` does not accept a `$roundingMode` parameter anymore
+  - `toBigRational()` does not simplify the fraction anymore; explicitly add `->simplified()` to get the previous behaviour
 - `BigRational`:
   - `getSign()` is renamed to `sign()`
   - `getNumerator()` is renamed to  `numerator()`
@@ -400,7 +430,7 @@ Added `BigDecimal::divideAndRemainder()`
 
 ## [0.2.0](https://github.com/brick/math/releases/tag/0.2.0) - 2015-05-22
 
-- `min()` and `max()` do not accept an `array` any more, but a variable number of parameters
+- `min()` and `max()` do not accept an `array` anymore, but a variable number of parameters
 - **minimum PHP version is now 5.6**
 - continuous integration with PHP 7
 

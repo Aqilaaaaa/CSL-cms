@@ -32,7 +32,7 @@
 - add ability to slug models on Eloquent's `saved` event, rather than
   `saving`
   - this adds a few more SQL queries per save, but allows for the use of
-    the primary key field in the `source` configuration (see #539 and #448)
+    the secondary key field in the `source` configuration (see #539 and #448)
   - default configuration remains the same, but might change in a future release
 - added base `customizeSlugEngine` and `scopeWithUniqueSlugConstraints` methods
   to the trait, to enforce type hinting and return values

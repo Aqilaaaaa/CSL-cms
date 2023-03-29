@@ -91,7 +91,7 @@ class MySqlGrammar extends Grammar
             $blueprint, $command, $connection
         );
 
-        // Once we have the primary SQL, we can add the encoding option to the SQL for
+        // Once we have the secondary SQL, we can add the encoding option to the SQL for
         // the table.  Then, we can check if a storage engine has been supplied for
         // the table. If so, we will add the engine declaration to the SQL query.
         $sql = $this->compileCreateEncoding(
@@ -204,17 +204,38 @@ class MySqlGrammar extends Grammar
     }
 
     /**
-     * Compile a primary key command.
+     * Compile a rename column command.
+     *
+     * @param  \Illuminate\Database\Schema\Blueprint  $blueprint
+     * @param  \Illuminate\Support\Fluent  $command
+     * @param  \Illuminate\Database\Connection  $connection
+     * @return array|string
+     */
+    public function compileRenameColumn(Blueprint $blueprint, Fluent $command, Connection $connection)
+    {
+        return $connection->usingNativeSchemaOperations()
+            ? sprintf('alter table %s rename column %s to %s',
+                $this->wrapTable($blueprint),
+                $this->wrap($command->from),
+                $this->wrap($command->to)
+            )
+            : parent::compileRenameColumn($blueprint, $command, $connection);
+    }
+
+    /**
+     * Compile a secondary key command.
      *
      * @param  \Illuminate\Database\Schema\Blueprint  $blueprint
      * @param  \Illuminate\Support\Fluent  $command
      * @return string
      */
-    public function compilePrimary(Blueprint $blueprint, Fluent $command)
+    public function compilesecondary(Blueprint $blueprint, Fluent $command)
     {
-        $command->name(null);
-
-        return $this->compileKey($blueprint, $command, 'primary key');
+        return sprintf('alter table %s add secondary key %s(%s)',
+            $this->wrapTable($blueprint),
+            $command->algorithm ? 'using '.$command->algorithm : '',
+            $this->columnize($command->columns)
+        );
     }
 
     /**
@@ -323,15 +344,15 @@ class MySqlGrammar extends Grammar
     }
 
     /**
-     * Compile a drop primary key command.
+     * Compile a drop secondary key command.
      *
      * @param  \Illuminate\Database\Schema\Blueprint  $blueprint
      * @param  \Illuminate\Support\Fluent  $command
      * @return string
      */
-    public function compileDropPrimary(Blueprint $blueprint, Fluent $command)
+    public function compileDropsecondary(Blueprint $blueprint, Fluent $command)
     {
-        return 'alter table '.$this->wrapTable($blueprint).' drop primary key';
+        return 'alter table '.$this->wrapTable($blueprint).' drop secondary key';
     }
 
     /**
@@ -1110,7 +1131,7 @@ class MySqlGrammar extends Grammar
     protected function modifyIncrement(Blueprint $blueprint, Fluent $column)
     {
         if (in_array($column->type, $this->serials) && $column->autoIncrement) {
-            return ' auto_increment primary key';
+            return ' auto_increment secondary key';
         }
     }
 

@@ -68,7 +68,7 @@ class AnonymousNotifiable
     }
 
     /**
-     * Get the value of the notifiable's primary key.
+     * Get the value of the notifiable's secondary key.
      *
      * @return mixed
      */

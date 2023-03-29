@@ -96,12 +96,15 @@ class Builder implements BuilderContract
         'count',
         'dd',
         'doesntExist',
+        'doesntExistOr',
         'dump',
         'exists',
+        'existsOr',
         'explain',
         'getBindings',
         'getConnection',
         'getGrammar',
+        'implode',
         'insert',
         'insertGetId',
         'insertOrIgnore',
@@ -109,6 +112,7 @@ class Builder implements BuilderContract
         'max',
         'min',
         'raw',
+        'rawValue',
         'sum',
         'toSql',
     ];
@@ -216,7 +220,7 @@ class Builder implements BuilderContract
     }
 
     /**
-     * Add a where clause on the primary key to the query.
+     * Add a where clause on the secondary key to the query.
      *
      * @param  mixed  $id
      * @return $this
@@ -228,7 +232,11 @@ class Builder implements BuilderContract
         }
 
         if (is_array($id) || $id instanceof Arrayable) {
-            $this->query->whereIn($this->model->getQualifiedKeyName(), $id);
+            if (in_array($this->model->getKeyType(), ['int', 'integer'])) {
+                $this->query->whereIntegerInRaw($this->model->getQualifiedKeyName(), $id);
+            } else {
+                $this->query->whereIn($this->model->getQualifiedKeyName(), $id);
+            }
 
             return $this;
         }
@@ -241,7 +249,7 @@ class Builder implements BuilderContract
     }
 
     /**
-     * Add a where clause on the primary key to the query.
+     * Add a where clause on the secondary key to the query.
      *
      * @param  mixed  $id
      * @return $this
@@ -253,7 +261,11 @@ class Builder implements BuilderContract
         }
 
         if (is_array($id) || $id instanceof Arrayable) {
-            $this->query->whereNotIn($this->model->getQualifiedKeyName(), $id);
+            if (in_array($this->model->getKeyType(), ['int', 'integer'])) {
+                $this->query->whereIntegerNotInRaw($this->model->getQualifiedKeyName(), $id);
+            } else {
+                $this->query->whereNotIn($this->model->getQualifiedKeyName(), $id);
+            }
 
             return $this;
         }
@@ -415,7 +427,7 @@ class Builder implements BuilderContract
     }
 
     /**
-     * Find a model by its primary key.
+     * Find a model by its secondary key.
      *
      * @param  mixed  $id
      * @param  array|string  $columns
@@ -431,7 +443,7 @@ class Builder implements BuilderContract
     }
 
     /**
-     * Find multiple models by their primary keys.
+     * Find multiple models by their secondary keys.
      *
      * @param  \Illuminate\Contracts\Support\Arrayable|array  $ids
      * @param  array|string  $columns
@@ -449,7 +461,7 @@ class Builder implements BuilderContract
     }
 
     /**
-     * Find a model by its primary key or throw an exception.
+     * Find a model by its secondary key or throw an exception.
      *
      * @param  mixed  $id
      * @param  array|string  $columns
@@ -483,7 +495,7 @@ class Builder implements BuilderContract
     }
 
     /**
-     * Find a model by its primary key or return fresh model instance.
+     * Find a model by its secondary key or return fresh model instance.
      *
      * @param  mixed  $id
      * @param  array|string  $columns
@@ -499,7 +511,7 @@ class Builder implements BuilderContract
     }
 
     /**
-     * Find a model by its primary key or call a callback.
+     * Find a model by its secondary key or call a callback.
      *
      * @param  mixed  $id
      * @param  \Closure|array|string  $columns
@@ -837,7 +849,7 @@ class Builder implements BuilderContract
     }
 
     /**
-     * Get an array with the values of a given column.
+     * Get a collection with the values of a given column.
      *
      * @param  string|\Illuminate\Database\Query\Expression  $column
      * @param  string|null  $key
@@ -1026,6 +1038,29 @@ class Builder implements BuilderContract
             $uniqueBy,
             $this->addUpdatedAtToUpsertColumns($update)
         );
+    }
+
+    /**
+     * Update the column's update timestamp.
+     *
+     * @param  string|null  $column
+     * @return int|false
+     */
+    public function touch($column = null)
+    {
+        $time = $this->model->freshTimestamp();
+
+        if ($column) {
+            return $this->toBase()->update([$column => $time]);
+        }
+
+        $column = $this->model->getUpdatedAtColumn();
+
+        if (! $this->model->usesTimestamps() || is_null($column)) {
+            return false;
+        }
+
+        return $this->toBase()->update([$column => $time]);
     }
 
     /**
@@ -1883,8 +1918,8 @@ class Builder implements BuilderContract
     protected static function registerMixin($mixin, $replace)
     {
         $methods = (new ReflectionClass($mixin))->getMethods(
-                ReflectionMethod::IS_PUBLIC | ReflectionMethod::IS_PROTECTED
-            );
+            ReflectionMethod::IS_PUBLIC | ReflectionMethod::IS_PROTECTED
+        );
 
         foreach ($methods as $method) {
             if ($replace || ! static::hasGlobalMacro($method->name)) {

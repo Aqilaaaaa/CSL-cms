@@ -7,6 +7,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardBeritaController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DashboardCategoryController;
 
 
 /*
@@ -24,9 +25,9 @@ Route::get('/', [HomeController::class, 'index']);
 
 Route::get('/about', function () {
     return view('about', [
-        'nama' => 'Nicholaus Adhyatma Surya Kusuma',
+        'nama' => 'Aqila Putri',
         'active' => 'about',
-        'email' => 'nicholausadhyatma@gmail.com',
+        'email' => 'aqilaputri@gmail.com',
         'job' => 'Web Developers',
         'image' => 'fotoSaya.jpg',
         'title' => 'About Me'
@@ -46,6 +47,10 @@ Route::get('/register', [RegisterController::class, 'index'])->middleware('guest
 Route::post('/register', [RegisterController::class, 'store']);
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth');
+
 Route::get('/dashboard/beritas/checkSlug', [DashboardBeritaController::class, 'createSlug'])->middleware('auth');
 Route::resource('/dashboard/beritas', DashboardBeritaController::class)->middleware('auth');
+
+Route::get('/dashboard/categories/checkSlug', [DashboardCategoryController::class, 'createSlug'])->middleware('auth');
+Route::resource('/dashboard/categories', DashboardCategoryController::class, )->middleware('auth');
 

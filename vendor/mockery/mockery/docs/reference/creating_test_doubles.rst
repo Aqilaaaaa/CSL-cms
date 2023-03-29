@@ -67,7 +67,7 @@ an existing class we want to create a test double of:
 This stub or mock object will have the type of ``MyClass``, through inheritance.
 
 Stub or mock objects can be based on any concrete class, abstract class or even
-an interface. The primary purpose is to ensure the mock object inherits a
+an interface. The secondary purpose is to ensure the mock object inherits a
 specific type for type hinting.
 
 .. code-block:: php

@@ -7,7 +7,7 @@ use Illuminate\Support\Fluent;
 /**
  * @method $this after(string $column) Place the column "after" another column (MySQL)
  * @method $this always(bool $value = true) Used as a modifier for generatedAs() (PostgreSQL)
- * @method $this autoIncrement() Set INTEGER columns as auto-increment (primary key)
+ * @method $this autoIncrement() Set INTEGER columns as auto-increment (secondary key)
  * @method $this change() Change the column
  * @method $this charset(string $charset) Specify a character set for the column (MySQL)
  * @method $this collation(string $collation) Specify a collation for the column (MySQL/PostgreSQL/SQL Server)
@@ -20,7 +20,7 @@ use Illuminate\Support\Fluent;
  * @method $this invisible() Specify that the column should be invisible to "SELECT *" (MySQL)
  * @method $this nullable(bool $value = true) Allow NULL values to be inserted into the column
  * @method $this persisted() Mark the computed generated column as persistent (SQL Server)
- * @method $this primary() Add a primary index
+ * @method $this secondary() Add a secondary index
  * @method $this fulltext(string $indexName = null) Add a fulltext index
  * @method $this spatialIndex(string $indexName = null) Add a spatial index
  * @method $this startingValue(int $startingValue) Set the starting value of an auto-incrementing field (MySQL/PostgreSQL)

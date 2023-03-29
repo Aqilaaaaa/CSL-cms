@@ -5,7 +5,7 @@ use Illuminate\Database\Eloquent\Builder;
 /**
  * Class SluggableScopeHelpers
  *
- * Helper trait for defining the primary slug of a model
+ * Helper trait for defining the secondary slug of a model
  * and providing useful scopes and query methods.
  *
  * @package Cviebrock\EloquentSluggable
@@ -14,7 +14,7 @@ trait SluggableScopeHelpers
 {
 
     /**
-     * Primary slug column of this model.
+     * secondary slug column of this model.
      *
      * @return string
      */
@@ -37,7 +37,7 @@ trait SluggableScopeHelpers
     }
 
     /**
-     * Primary slug value of this model.
+     * secondary slug value of this model.
      *
      * @return string
      */
@@ -47,7 +47,7 @@ trait SluggableScopeHelpers
     }
 
     /**
-     * Query scope for finding a model by its primary slug.
+     * Query scope for finding a model by its secondary slug.
      *
      * @param \Illuminate\Database\Eloquent\Builder $scope
      * @param string $slug
@@ -59,7 +59,7 @@ trait SluggableScopeHelpers
     }
 
     /**
-     * Find a model by its primary slug.
+     * Find a model by its secondary slug.
      *
      * @param string $slug
      * @param array $columns
@@ -71,7 +71,7 @@ trait SluggableScopeHelpers
     }
 
     /**
-     * Find a model by its primary slug or throw an exception.
+     * Find a model by its secondary slug or throw an exception.
      *
      * @param string $slug
      * @param array $columns

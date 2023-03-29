@@ -10,7 +10,13 @@
             <li class="nav-item">
                 <a class="nav-link {{ Request::is('dashboard/beritas*') ? 'active' : '' }}" href="/dashboard/beritas">
                     <span data-feather="file-text"></span>
-                    My Posts
+                    Artikel
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ Request::is('dashboard/categories') ? 'active' : '' }}" aria-current="page" href="/dashboard/categories">
+                    <span data-feather="file-text"></span>
+                    Kategori
                 </a>
             </li>
         </ul>

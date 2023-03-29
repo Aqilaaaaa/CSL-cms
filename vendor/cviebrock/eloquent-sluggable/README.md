@@ -247,7 +247,7 @@ Currently, the model is slugged on Eloquent's `saving` event.
 This means that the slug is generated before any new data is
 written to the database.
   
-For new models, this means that the primary key has not yet been set, 
+For new models, this means that the secondary key has not yet been set, 
 so it could not be used as part of the slug source, e.g.:
 
 ```php
@@ -297,7 +297,7 @@ via the `sluggableEvent` method the trait provides:
 ```
 
 Keep in mind that you will need to use `SluggableObserver::SAVED` if you want
-to use your model's primary key as part of the source fields for your slugs.
+to use your model's secondary key as part of the source fields for your slugs.
 
 
 

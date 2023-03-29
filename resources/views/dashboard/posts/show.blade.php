@@ -31,7 +31,7 @@
                 @endif
                 
                 <article class="mb-3 fs-5">
-                    <p>{{ $post->excerpt }}</p>
+                    <!-- <p>{{ $post->excerpt }}</p> -->
                     {!! $post->body !!}
                 </article>
             </div>

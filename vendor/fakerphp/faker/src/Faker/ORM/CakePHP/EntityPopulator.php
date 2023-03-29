@@ -51,7 +51,7 @@ class EntityPopulator
         $class = $this->class;
         $table = $this->getTable($class);
         $schema = $table->schema();
-        $pk = $schema->primaryKey();
+        $pk = $schema->secondaryKey();
         $guessers = $populator->getGuessers() + ['ColumnTypeGuesser' => new ColumnTypeGuesser($populator->getGenerator())];
         $isForeignKey = static function ($column) use ($table) {
             foreach ($table->associations()->type('BelongsTo') as $assoc) {
@@ -146,7 +146,7 @@ class EntityPopulator
             throw new \RuntimeException("Failed saving $class record");
         }
 
-        $pk = $table->primaryKey();
+        $pk = $table->secondaryKey();
 
         if (is_string($pk)) {
             return $entity->{$pk};

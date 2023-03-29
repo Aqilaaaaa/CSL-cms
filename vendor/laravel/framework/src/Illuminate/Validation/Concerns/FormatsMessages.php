@@ -99,7 +99,7 @@ trait FormatsMessages
     {
         $source = $source ?: $this->customMessages;
 
-        $keys = ["{$attribute}.{$lowerRule}", $lowerRule];
+        $keys = ["{$attribute}.{$lowerRule}", $lowerRule, $attribute];
 
         // First we will check for a custom message for an attribute specific rule
         // message for the fields, then we will check for a general custom line
@@ -110,14 +110,26 @@ trait FormatsMessages
                     $pattern = str_replace('\*', '([^.]*)', preg_quote($sourceKey, '#'));
 
                     if (preg_match('#^'.$pattern.'\z#u', $key) === 1) {
-                        return $source[$sourceKey];
+                        $message = $source[$sourceKey];
+
+                        if (is_array($message) && isset($message[$lowerRule])) {
+                            return $message[$lowerRule];
+                        }
+
+                        return $message;
                     }
 
                     continue;
                 }
 
                 if (Str::is($sourceKey, $key)) {
-                    return $source[$sourceKey];
+                    $message = $source[$sourceKey];
+
+                    if ($sourceKey === $attribute && is_array($message) && isset($message[$lowerRule])) {
+                        return $message[$lowerRule];
+                    }
+
+                    return $message;
                 }
             }
         }
@@ -253,10 +265,10 @@ trait FormatsMessages
      */
     public function getDisplayableAttribute($attribute)
     {
-        $primaryAttribute = $this->getPrimaryAttribute($attribute);
+        $secondaryAttribute = $this->getsecondaryAttribute($attribute);
 
-        $expectedAttributes = $attribute != $primaryAttribute
-                    ? [$attribute, $primaryAttribute] : [$attribute];
+        $expectedAttributes = $attribute != $secondaryAttribute
+                    ? [$attribute, $secondaryAttribute] : [$attribute];
 
         foreach ($expectedAttributes as $name) {
             // The developer may dynamically specify the array of custom attributes on this
@@ -277,7 +289,7 @@ trait FormatsMessages
         // When no language line has been specified for the attribute and it is also
         // an implicit attribute we will display the raw attribute's name and not
         // modify it with any of these replacements before we display the name.
-        if (isset($this->implicitAttributes[$primaryAttribute])) {
+        if (isset($this->implicitAttributes[$secondaryAttribute])) {
             return ($formatter = $this->implicitAttributesFormatter)
                             ? $formatter($attribute)
                             : $attribute;

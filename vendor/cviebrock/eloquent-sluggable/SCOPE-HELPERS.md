@@ -9,7 +9,7 @@ $post = Post::findBySlugOrFail($slugString);
 ```
 
 These two methods have the same signature and functionality as Eloquent's `find()` and `findOrFail()` methods
-except that they use the slug field instead of the primary key.
+except that they use the slug field instead of the secondary key.
 
 The helper trait also adds a query scope to help limit searches to a particular slug:
 
@@ -22,7 +22,7 @@ $post = Post::where('author_id', '=', 3)
 By default, the trait looks at your `sluggable()` method and uses the first slug that's defined in the configuration
 array for the helper scopes and methods.  If your model has more than one slugged field, you will either need to
 put the field to be used for scopes first, or define an additional property on your model which indicates which
-slug is the "primary" one:
+slug is the "secondary" one:
 
 ```php
 use Cviebrock\EloquentSluggable\Sluggable;

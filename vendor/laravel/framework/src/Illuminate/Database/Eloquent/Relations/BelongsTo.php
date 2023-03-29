@@ -90,7 +90,7 @@ class BelongsTo extends Relation
     {
         if (static::$constraints) {
             // For belongs to relationships, which are essentially the inverse of has one
-            // or has many relationships, we need to actually query on the primary key
+            // or has many relationships, we need to actually query on the secondary key
             // of the related models matching on the foreign key that's on a parent.
             $table = $this->related->getTable();
 
@@ -106,7 +106,7 @@ class BelongsTo extends Relation
      */
     public function addEagerConstraints(array $models)
     {
-        // We'll grab the primary key name of the related models since it could be set to
+        // We'll grab the secondary key name of the related models since it could be set to
         // a non-standard name and not "id". We will then construct the constraint for
         // our eagerly loading query so it returns the proper models from execution.
         $key = $this->related->getTable().'.'.$this->ownerKey;
@@ -170,9 +170,9 @@ class BelongsTo extends Relation
 
         $owner = $this->ownerKey;
 
-        // First we will get to build a dictionary of the child models by their primary
+        // First we will get to build a dictionary of the child models by their secondary
         // key of the relationship, then we can easily match the children back onto
-        // the parents using that dictionary and the primary key of the children.
+        // the parents using that dictionary and the secondary key of the children.
         $dictionary = [];
 
         foreach ($results as $result) {
@@ -183,7 +183,7 @@ class BelongsTo extends Relation
 
         // Once we have the dictionary constructed, we can loop through all the parents
         // and match back onto their children using these keys of the dictionary and
-        // the primary key of the children to map them onto the correct instances.
+        // the secondary key of the children to map them onto the correct instances.
         foreach ($models as $model) {
             $attribute = $this->getDictionaryKey($model->{$foreign});
 

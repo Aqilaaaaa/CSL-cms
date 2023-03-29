@@ -1,6 +1,3 @@
-
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/support-ukraine.svg?t=1" />](https://supportukrainenow.org)
-
 # Generate slugs when saving Eloquent models
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/laravel-sluggable.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-sluggable)
@@ -297,6 +294,20 @@ public function getSlugOptions() : SlugOptions
 }
 ```
 
+### Setting the slug suffix starting index
+
+By default, suffix index starts from 1, you can set starting number.
+
+```php
+public function getSlugOptions() : SlugOptions
+{
+    return SlugOptions::create()
+        ->generateSlugsFrom('name')
+        ->saveSlugsTo('slug')
+        ->startSlugSuffixFrom(2);
+}
+```
+
 ### Integration with laravel-translatable
 
 You can use this package along with [laravel-translatable](https://github.com/spatie/laravel-translatable) to generate a slug for each locale. Instead of using the `HasSlug` trait, you must use the `HasTranslatableSlug` trait, and add the name of the slug field to the `$translatable` array. For slugs that are generated from a single field _or_ multiple fields, you don't have to change anything else.
@@ -361,7 +372,7 @@ class YourEloquentModel extends Model
 #### Implicit route model binding
 
 You can also use Laravels [implicit route model binding](https://laravel.com/docs/8.x/routing#implicit-binding) inside your controller to automatically resolve the model. To use this feature, make sure that the slug column matches the `routeNameKey`.  
-Currently, only some database types support JSON opterations. Further information about which databases support JSON can be found in the [Laravel docs](https://laravel.com/docs/8.x/queries#json-where-clauses).
+Currently, only some database types support JSON operations. Further information about which databases support JSON can be found in the [Laravel docs](https://laravel.com/docs/8.x/queries#json-where-clauses).
 
 ```php
 namespace App;

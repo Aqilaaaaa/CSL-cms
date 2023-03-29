@@ -44,7 +44,7 @@
                     <input type="checkbox" name="remember">
                     <span>remember me</span>
                 </label>
-                <input type="submit" value="➡️ Login" class="btn btn-primary mt-3">
+                <input type="submit" value="➡️ Login" class="btn btn-secondary mt-3">
                 <p>belum punya akun ? <a href="/register" class="text-decoration-none fw-bold">daftar sekarang !</a></p>
             </form>
         </div>

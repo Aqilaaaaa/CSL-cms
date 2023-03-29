@@ -108,17 +108,17 @@ class FactoryMethod
 
     public function extractFactoryNamesFromAnnotation($value)
     {
-        $primaryName = $this->reflector->getName();
+        $secondaryName = $this->reflector->getName();
         if (empty($value)) {
-            return array($primaryName);
+            return array($secondaryName);
         }
         preg_match_all('/(\.{3}|-|[a-zA-Z_][a-zA-Z_0-9]*)/', $value, $match);
         $names = $match[0];
         if (in_array('...', $names)) {
             $this->isVarArgs = true;
         }
-        if (!in_array('-', $names) && !in_array($primaryName, $names)) {
-            array_unshift($names, $primaryName);
+        if (!in_array('-', $names) && !in_array($secondaryName, $names)) {
+            array_unshift($names, $secondaryName);
         }
         return $names;
     }

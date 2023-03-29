@@ -51,7 +51,7 @@
                 @else
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span><i class="bi bi-box-arrow-in-right me-2"></i>Login / Register</span>
+                        <span><i class="bi bi-box-arrow-in-right me-2"></i>Login </span>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="/login"></i>Login</a>

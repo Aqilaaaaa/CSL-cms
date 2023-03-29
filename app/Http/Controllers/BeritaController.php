@@ -29,7 +29,7 @@ class BeritaController extends Controller
 
         return view('berita', [
             'title' => $title,
-            'berita' => Berita::latest()->filter(request(['search', 'category', 'author']))
+            'berita' => Berita::latest()->where('status', 'publish')->filter(request(['search', 'category', 'author']))
                 ->paginate(7)->withQueryString()
         ]);
     }

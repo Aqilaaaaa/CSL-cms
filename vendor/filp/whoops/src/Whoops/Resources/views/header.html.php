@@ -2,7 +2,7 @@
   <div class="exc-title">
     <?php foreach ($name as $i => $nameSection): ?>
       <?php if ($i == count($name) - 1): ?>
-        <span class="exc-title-primary"><?php echo $tpl->escape($nameSection) ?></span>
+        <span class="exc-title-secondary"><?php echo $tpl->escape($nameSection) ?></span>
       <?php else: ?>
         <?php echo $tpl->escape($nameSection) . ' \\' ?>
       <?php endif ?>

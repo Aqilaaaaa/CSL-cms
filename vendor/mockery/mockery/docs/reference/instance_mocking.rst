@@ -19,4 +19,4 @@ you can't simply inject a replacement object.
 
 As before, this does not prevent a require statement from including the real
 class and triggering a fatal PHP error. It's intended for use where
-autoloading is the primary class loading mechanism.
+autoloading is the secondary class loading mechanism.

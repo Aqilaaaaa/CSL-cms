@@ -265,7 +265,7 @@ abstract class Relation implements BuilderContract
     }
 
     /**
-     * Get all of the primary keys for an array of models.
+     * Get all of the secondary keys for an array of models.
      *
      * @param  array  $models
      * @param  string|null  $key

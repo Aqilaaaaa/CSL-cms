@@ -48,6 +48,23 @@
             </div>
 
             <div class="mb-3">
+                <label for="status" class="form-label">Status</label>
+                <select name="status" id="status" class="form-control">
+                    <option @if($post->status == 'publish') selected @endif
+                        value="publish">Publish</option>
+                    <option @if($post->status == 'draft') selected @endif
+                        value="draft">Draft</option>
+                    <option @if($post->status == 'disable') selected @endif
+                        value="disable">Inactive</option>
+                </select>
+                    @error('status')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                     @enderror
+            </div>
+
+            <div class="mb-3">
                     <label for="image" class="form-label">Post Image</label>
                         @if($post->image)
                         <div>
@@ -68,7 +85,7 @@
                 </div>
 
             <div class="mb-3">
-                <input id="body" type="hidden" name="body" class="@error('body') is-invalid @enderror" value={{ old('body', $post->body) }}>
+                <input id="body" type="hidden" name="body" class="@error('body') is-invalid @enderror" value="{{ old('body', $post->body) }}">
                 <trix-editor input="body"></trix-editor>
                 @error('body')
                     <div class="invalid-feedback">
@@ -77,7 +94,7 @@
                 @enderror
             </div>
 
-            <button type="submit" class="btn btn-primary">Update Post</button>
+            <button type="submit" class="btn btn-secondary">Update Post</button>
         </form>
     </div>
 

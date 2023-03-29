@@ -109,7 +109,7 @@ class CompositeExpectation implements ExpectationInterface
     }
 
     /**
-     * Starts a new expectation addition on the first mock which is the primary
+     * Starts a new expectation addition on the first mock which is the secondary
      * target outside of a demeter chain
      *
      * @param mixed ...$args
@@ -123,7 +123,7 @@ class CompositeExpectation implements ExpectationInterface
     }
 
     /**
-     * Starts a new expectation addition on the first mock which is the primary
+     * Starts a new expectation addition on the first mock which is the secondary
      * target outside of a demeter chain
      *
      * @param mixed ...$args

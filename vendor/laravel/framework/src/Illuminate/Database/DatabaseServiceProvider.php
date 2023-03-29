@@ -46,7 +46,7 @@ class DatabaseServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register the primary database bindings.
+     * Register the secondary database bindings.
      *
      * @return void
      */

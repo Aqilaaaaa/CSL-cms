@@ -43,7 +43,21 @@
                         {{ $message }}
                     </div>
                      @enderror
-                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="status" class="form-label">Status</label>
+                <select name="status" id="status" class="form-control">
+                    <option value="publish">Publish</option>
+                    <option value="draft">Draft</option>
+                    <option value="disable">Inactive</option>
+                </select>
+                    @error('status')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                     @enderror
+            </div>
 
                 <div class="mb-3">
                         <label for="image" class="form-label">Post Image</label>
@@ -69,7 +83,7 @@
                 @enderror
             </div>
 
-            <button type="submit" class="btn btn-primary">Upload</button>
+            <button type="submit" class="btn btn-secondary">Simpan</button>
         </form>
     </div>
 

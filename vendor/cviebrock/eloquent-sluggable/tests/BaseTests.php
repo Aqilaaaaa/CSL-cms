@@ -531,11 +531,11 @@ class BaseTests extends TestCase
     }
 
     /**
-     * Test that you can use the model's primary key
+     * Test that you can use the model's secondary key
      * as part of the source field when the sluggableEvent
      * is using the SAVED observer.
      */
-    public function testPrimaryKeyInSource(): void
+    public function testsecondaryKeyInSource(): void
     {
         $post = PostWithIdSourceOnSaved::create([
             'title' => 'My First Post'
@@ -567,11 +567,11 @@ class BaseTests extends TestCase
     }
 
     /**
-     * Test that you can't use the model's primary key
+     * Test that you can't use the model's secondary key
      * as part of the source field if the sluggableEvent
      * is the default SAVING.
      */
-    public function testPrimaryKeyInSourceOnSaving(): void
+    public function testsecondaryKeyInSourceOnSaving(): void
     {
         $post = PostWithIdSource::create([
             'title' => 'My First Post'

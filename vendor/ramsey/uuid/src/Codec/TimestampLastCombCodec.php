@@ -42,7 +42,7 @@ namespace Ramsey\Uuid\Codec;
  * $timestampLastComb = $factory->uuid4();
  * ```
  *
- * @link https://www.informit.com/articles/printerfriendly/25862 The Cost of GUIDs as Primary Keys
+ * @link https://www.informit.com/articles/printerfriendly/25862 The Cost of GUIDs as secondary Keys
  *
  * @psalm-immutable
  */

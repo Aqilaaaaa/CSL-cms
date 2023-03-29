@@ -7,7 +7,7 @@ class LuaScripts
     /**
      * Get the Lua script for computing the size of queue.
      *
-     * KEYS[1] - The name of the primary queue
+     * KEYS[1] - The name of the secondary queue
      * KEYS[2] - The name of the "delayed" queue
      * KEYS[3] - The name of the "reserved" queue
      *
@@ -106,7 +106,7 @@ LUA;
     {
         return <<<'LUA'
 -- Get all of the jobs with an expired "score"...
-local val = redis.call('zrangebyscore', KEYS[1], '-inf', ARGV[1])
+local val = redis.call('zrangebyscore', KEYS[1], '-inf', ARGV[1], 'limit', 0, ARGV[2])
 
 -- If we have values in the array, we will remove them from the first queue
 -- and add them onto the destination queue in chunks of 100, which moves
@@ -130,7 +130,7 @@ LUA;
     /**
      * Get the Lua script for removing all jobs from the queue.
      *
-     * KEYS[1] - The name of the primary queue
+     * KEYS[1] - The name of the secondary queue
      * KEYS[2] - The name of the "delayed" queue
      * KEYS[3] - The name of the "reserved" queue
      * KEYS[4] - The name of the "notify" queue

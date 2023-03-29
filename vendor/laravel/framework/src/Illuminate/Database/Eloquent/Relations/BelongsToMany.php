@@ -205,7 +205,7 @@ class BelongsToMany extends Relation
     {
         $query = $query ?: $this->query;
 
-        // We need to join to the intermediate table on the related model's primary
+        // We need to join to the intermediate table on the related model's secondary
         // key column with the intermediate table's foreign key for the related
         // model instance. Then we can set the "where" for the parent models.
         $query->join(
@@ -576,7 +576,7 @@ class BelongsToMany extends Relation
     }
 
     /**
-     * Find a related model by its primary key or return a new instance of the related model.
+     * Find a related model by its secondary key or return a new instance of the related model.
      *
      * @param  mixed  $id
      * @param  array  $columns
@@ -656,7 +656,7 @@ class BelongsToMany extends Relation
     }
 
     /**
-     * Find a related model by its primary key.
+     * Find a related model by its secondary key.
      *
      * @param  mixed  $id
      * @param  array  $columns
@@ -674,7 +674,7 @@ class BelongsToMany extends Relation
     }
 
     /**
-     * Find multiple related models by their primary keys.
+     * Find multiple related models by their secondary keys.
      *
      * @param  \Illuminate\Contracts\Support\Arrayable|array  $ids
      * @param  array  $columns
@@ -688,13 +688,13 @@ class BelongsToMany extends Relation
             return $this->getRelated()->newCollection();
         }
 
-        return $this->whereIn(
-            $this->getRelated()->getQualifiedKeyName(), $this->parseIds($ids)
+        return $this->whereKey(
+            $this->parseIds($ids)
         )->get($columns);
     }
 
     /**
-     * Find a related model by its primary key or throw an exception.
+     * Find a related model by its secondary key or throw an exception.
      *
      * @param  mixed  $id
      * @param  array  $columns
@@ -720,7 +720,7 @@ class BelongsToMany extends Relation
     }
 
     /**
-     * Find a related model by its primary key or call a callback.
+     * Find a related model by its secondary key or call a callback.
      *
      * @param  mixed  $id
      * @param  \Closure|array  $columns
@@ -877,7 +877,7 @@ class BelongsToMany extends Relation
     /**
      * Get the pivot columns for the relation.
      *
-     * "pivot_" is prefixed ot each column for easy removal later.
+     * "pivot_" is prefixed at each column for easy removal later.
      *
      * @return array
      */
@@ -1153,8 +1153,6 @@ class BelongsToMany extends Relation
      */
     public function touch()
     {
-        $key = $this->getRelated()->getKeyName();
-
         $columns = [
             $this->related->getUpdatedAtColumn() => $this->related->freshTimestampString(),
         ];
@@ -1163,7 +1161,7 @@ class BelongsToMany extends Relation
         // the related model's timestamps, to make sure these all reflect the changes
         // to the parent models. This will help us keep any caching synced up here.
         if (count($ids = $this->allRelatedIds()) > 0) {
-            $this->getRelated()->newQueryWithoutRelationships()->whereIn($key, $ids)->update($columns);
+            $this->getRelated()->newQueryWithoutRelationships()->whereKey($ids)->update($columns);
         }
     }
 
@@ -1225,6 +1223,20 @@ class BelongsToMany extends Relation
         $this->touchIfTouching();
 
         return $models;
+    }
+
+    /**
+     * Save an array of new models without raising any events and attach them to the parent model.
+     *
+     * @param  \Illuminate\Support\Collection|array  $models
+     * @param  array  $pivotAttributes
+     * @return array
+     */
+    public function saveManyQuietly($models, array $pivotAttributes = [])
+    {
+        return Model::withoutEvents(function () use ($models, $pivotAttributes) {
+            return $this->saveMany($models, $pivotAttributes);
+        });
     }
 
     /**

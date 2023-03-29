@@ -15,7 +15,7 @@
     <!-- Bootrsap icon-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
 
-    <title>NcD | {{ $title }}</title>
+    <title>CSL-CMS | {{ $title }}</title>
 </head>
 
 <body>
@@ -27,7 +27,7 @@
     @endif
 
     <div id="main-content" class="container mt-6 ">
-        <h1 class="text-center mb-5">✨ {{ $title }} ✨</h1>
+        <h1 class="text-center mb-5"> {{ $title }} </h1>
         @yield('content')
 
     </div>
@@ -44,7 +44,7 @@
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
     </script>
 
-    <footer class="text-center mt-5">Made with ❤️...</footer>
+    
 </body>
 
 </html>

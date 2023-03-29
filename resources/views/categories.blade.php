@@ -20,6 +20,6 @@
                 </div>
             @endforeach
         </div>
-        <a href="/berita" class="text-decoration-none mt-3 badge bg-primary p-2 fs-6"><i class="bi bi-arrow-left"></i> Kembali</a>
+        <a href="/berita" class="text-decoration-none mt-3 badge bg-secondary p-2 fs-6"><i class="bi bi-arrow-left"></i> Kembali</a>
     </div>
 @endsection

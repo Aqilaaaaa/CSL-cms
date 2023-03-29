@@ -41,18 +41,18 @@
                         
                         <div class="card-body">
                             <a href="/berita/{{ $berita[0]->slug }}" class="text-decoration-none text-dark">
-                                <h3 class="card-title fw-bolder">✨{{ $berita[0]->title }}✨</h3>
+                                <h3 class="card-title fw-bolder">{{ $berita[0]->title }}</h3>
                             </a>
                             <h6>Writen By :
                                 <a class="text-decoration-none fw-bolder"
                                     href="/berita?author={{ $berita[0]->author->username }}">{{ $berita[0]->author->name }}</a>
                                 in
-                                <a class="text-decoration-none badge bg-primary"
+                                <a class="text-decoration-none badge bg-secondary"
                                     href="/berita?category={{ $berita[0]->category->slug }}">{{ $berita[0]->category->name }}</a>
                                 <span class="text-muted">{{ $berita[0]->created_at->diffForHumans() }}</span>
                             </h6>
                             <p class="card-text">{{ $berita[0]->excerpt }}</p>
-                            <a href="/berita/{{ $berita[0]->slug }}" class="text-decoration-none btn btn-primary">Read
+                            <a href="/berita/{{ $berita[0]->slug }}" class="text-decoration-none btn btn-secondary">Read
                                 More</a>
                         </div>
                     </div>
@@ -85,7 +85,7 @@
                                     <span class="text-muted">{{ $post->created_at->diffForHumans() }}</span>
                                 </h6>
                                 <p class="card-text">{{ $post->excerpt }}</p>
-                                <a href="/berita/{{ $post->slug }}" class="btn btn-outline-primary">Read More</a>
+                                <a href="/berita/{{ $post->slug }}" class="btn btn-secondary">Read More</a>
                             </div>
                         </div>
                     </div>
@@ -100,6 +100,6 @@
         @endif
 
         {{ $berita->links() }}
-        <a class="text-decoration-none badge bg-primary fs-6" href="/categories">Lihat Semua Kategori</a><br>
+        <a class="text-decoration-none badge bg-secondary fs-6" href="/categories">Lihat Semua Kategori</a><br>
     </div>
 @endsection

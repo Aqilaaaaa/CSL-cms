@@ -3,7 +3,7 @@
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 
 /**
- * Class PostWithMultipleSlugsAndPrimary
+ * Class PostWithMultipleSlugsAndsecondary
  *
  * @package Cviebrock\EloquentSluggable\Tests\Models
  */

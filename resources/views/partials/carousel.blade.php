@@ -23,7 +23,7 @@
                         class="d-block image w-100" alt="...">
                     <div class="carousel-caption d-md-block">
                         <h5>{{ $post->title }}</h5>
-                        <a href="/berita/{{ $post->slug }}" class="btn-primary p-2 text-decoration-none">Read More</a>
+                        <a href="/berita/{{ $post->slug }}" class="btn-secondary p-2 text-decoration-none">Read More</a>
                     </div>
                 </div>
             @endforeach

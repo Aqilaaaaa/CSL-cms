@@ -57,7 +57,7 @@ class PgSqlCaster
     private const DIAG_CODES = [
         'severity' => \PGSQL_DIAG_SEVERITY,
         'sqlstate' => \PGSQL_DIAG_SQLSTATE,
-        'message' => \PGSQL_DIAG_MESSAGE_PRIMARY,
+        'message' => \PGSQL_DIAG_MESSAGE_secondary,
         'detail' => \PGSQL_DIAG_MESSAGE_DETAIL,
         'hint' => \PGSQL_DIAG_MESSAGE_HINT,
         'statement position' => \PGSQL_DIAG_STATEMENT_POSITION,

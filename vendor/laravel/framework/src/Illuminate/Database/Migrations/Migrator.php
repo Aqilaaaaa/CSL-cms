@@ -67,6 +67,13 @@ class Migrator
     protected $paths = [];
 
     /**
+     * The paths that have already been required.
+     *
+     * @var array<string, \Illuminate\Database\Migrations\Migration|null>
+     */
+    protected static $requiredPathCache = [];
+
+    /**
      * The output interface implementation.
      *
      * @var \Symfony\Component\Console\Output\OutputInterface
@@ -179,6 +186,10 @@ class Migrator
         }
 
         $this->fireMigrationEvent(new MigrationsEnded('up'));
+
+        if ($this->output) {
+            $this->output->writeln('');
+        }
     }
 
     /**
@@ -232,7 +243,11 @@ class Migrator
             return [];
         }
 
-        return $this->rollbackMigrations($migrations, $paths, $options);
+        return tap($this->rollbackMigrations($migrations, $paths, $options), function () {
+            if ($this->output) {
+                $this->output->writeln('');
+            }
+        });
     }
 
     /**
@@ -266,7 +281,7 @@ class Migrator
 
         $this->fireMigrationEvent(new MigrationsStarted('down'));
 
-        $this->write(Info::class, 'Rollbacking migrations.');
+        $this->write(Info::class, 'Rolling back migrations.');
 
         // Next we will run through all of the migrations and call the "down" method
         // which will reverse each migration in order. This getLast method on the
@@ -503,9 +518,13 @@ class Migrator
             return new $class;
         }
 
-        $migration = $this->files->getRequire($path);
+        $migration = static::$requiredPathCache[$path] ??= $this->files->getRequire($path);
 
-        return is_object($migration) ? $migration : new $class;
+        if (is_object($migration)) {
+            return clone $migration;
+        }
+
+        return new $class;
     }
 
     /**
@@ -721,13 +740,19 @@ class Migrator
      * Write to the console's output.
      *
      * @param  string  $component
-     * @param  array<int, string>|string  $arguments
+     * @param  array<int, string>|string  ...$arguments
      * @return void
      */
     protected function write($component, ...$arguments)
     {
-        if ($this->output) {
-            with(new $component($this->output))->render(...$arguments);
+        if ($this->output && class_exists($component)) {
+            (new $component($this->output))->render(...$arguments);
+        } else {
+            foreach ($arguments as $argument) {
+                if (is_callable($argument)) {
+                    $argument();
+                }
+            }
         }
     }
 

@@ -56,7 +56,7 @@
                     @enderror
                 </label>
 
-                <input type="submit" value="Register" class="btn btn-primary mt-3">
+                <input type="submit" value="Register" class="btn btn-secondary mt-3">
                 <p>sudah punya akun ? <a href="/login" class="text-decoration-none fw-bold">login sekarang !</a></p>
             </form>
         </div>

@@ -60,7 +60,7 @@ trait Sluggable
      * - SluggableObserver::SAVING (to generate the slug before the model is saved)
      * - SluggableObserver::SAVED (to generate the slug after the model is saved)
      *
-     * The second option is required if the primary key is to be part of the slug
+     * The second option is required if the secondary key is to be part of the slug
      * source, as it won't be set during the "saving" event.
      *
      * @return string

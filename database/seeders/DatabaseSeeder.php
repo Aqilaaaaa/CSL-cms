@@ -31,12 +31,6 @@ class DatabaseSeeder extends Seeder
              'password' => bcrypt('12345')
          ]);
 
-        // User::create([
-        //     'name' => 'Faris Aditya',
-        //     'email' => 'faris3@gmail.com',
-        //     'password' => bcrypt('12345')
-        // ]);
-
         Category::create([
             'name' => 'Programming',
             'slug' => 'programming'

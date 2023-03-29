@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class DatabaseNotification extends Model
 {
     /**
-     * The "type" of the primary key ID.
+     * The "type" of the secondary key ID.
      *
      * @var string
      */

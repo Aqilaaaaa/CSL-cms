@@ -49,6 +49,7 @@ class DashboardBeritaController extends Controller
             'title' => 'required|min:4|max:255',
             'slug' => 'required|max:255|unique:beritas',
             'category_id' => 'required',
+            'status' => 'required',
             'image' => 'image|file|max:1024',
             'body' => 'required'
         ]);
@@ -109,6 +110,7 @@ class DashboardBeritaController extends Controller
         $rules = ([
             'title' => 'required|min:4|max:255',
             'category_id' => 'required',
+            'status' => 'required',
             'image' => 'image|file|max:1024',
             'body' => 'required'
         ]);
