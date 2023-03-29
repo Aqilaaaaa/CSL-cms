@@ -23,7 +23,11 @@ return new class extends Migration
             $table->string('image')->nullable();
             $table->text('excerpt');
             $table->text('body');
+<<<<<<< HEAD
             $table->enum('status', ['publish', 'draft', 'disable'])->default('draft');
+=======
+            $table->string('status');
+>>>>>>> 6f85290 (sec commit)
             $table->timestamp('published_at')->nullable();
             $table->timestamps();
         });

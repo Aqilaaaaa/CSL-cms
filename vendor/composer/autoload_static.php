@@ -179,6 +179,15 @@ class ComposerStaticInit6bd9e13dfe74f0a3af11971b42565f70
         array (
             0 => __DIR__ . '/..' . '/voku/portable-ascii/src/voku',
         ),
+<<<<<<< HEAD
+=======
+        'phpDocumentor\\Reflection\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
+            1 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
+            2 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
+        ),
+>>>>>>> 6f85290 (sec commit)
         'Whoops\\' => 
         array (
             0 => __DIR__ . '/..' . '/filp/whoops/src/Whoops',
